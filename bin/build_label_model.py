@@ -60,11 +60,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print(args)
 
-    # user_list = _get_user_list(args)
-    print("Turning this off for now to reduce load on the server")
-    user_list = []
+    user_list = _get_user_list(args)
     logging.info("received list with %s users" % user_list)
-
     for user_id in user_list:
         logging.info("building model for user %s" % user_id)
         # these can come from the application config as default values
