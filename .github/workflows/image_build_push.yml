@@ -6,7 +6,7 @@ name: docker image
 # events but only for the master branch
 on:
   push:
-    branches: [ master, gis-based-mode-detection, join_redirect_to_static ]
+    branches: [ master, gis-based-mode-detection, join_redirect_to_static, image_CI ]
 
 
 # Env variable
@@ -40,9 +40,10 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: build docker image
       run: |
-        docker build -t $DOCKER_USER/${GITHUB_REPOSITORY#*/}:${GITHUB_REF##*/}_${{ steps.date.outputs.date }} .
+        docker build -t $DOCKER_USER/${GITHUB_REPOSITORY#*/}:${GITHUB_REF##*/}_${{ steps.date.outputs.date }} -t $DOCKER_USER/${GITHUB_REPOSITORY#*/}:${GITHUB_REF##*/} .
         docker images
 
     - name: push docker image
       run: |
         docker push $DOCKER_USER/${GITHUB_REPOSITORY#*/}:${GITHUB_REF##*/}_${{ steps.date.outputs.date }}
+        docker push $DOCKER_USER/${GITHUB_REPOSITORY#*/}:${GITHUB_REF##*/}
